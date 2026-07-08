@@ -1,7 +1,23 @@
-from ultralytics import YOLO
-from PIL import Image
 import io
+import torch
+from PIL import Image
+from ultralytics import YOLO
 
+# PyTorch unpickler crash fix for Ultralytics YOLO models
+try:
+    torch.serialization.add_safe_globals([
+        'ultralytics.nn.tasks.DetectionModel',
+        'ultralytics.nn.modules.block.C2f',
+        'ultralytics.nn.modules.block.DFL',
+        'ultralytics.nn.modules.conv.Conv',
+        'ultralytics.nn.modules.head.Detect',
+        'ultralytics.utils.IterableSimpleNamespace'
+    ])
+except AttributeError:
+    # Older torch versions might not have add_safe_globals
+    pass
+
+# Ekhon model smooth-ly load hobe
 model = YOLO("model/best.pt")
 
 def run_inference(image_bytes):
