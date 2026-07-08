@@ -51,17 +51,23 @@ taka-detector/
 ├── Dockerfile             # Multi-stage production container instructions
 ├── requirements.txt       # Production pinned CPU-only package dependencies
 └── README.md              # Documentation hub
-🛠️ Step-by-Step Installation Guide
+```
+
+## 🛠️ Step-by-Step Installation Guide
+
 Follow these sequential steps to establish a local mirroring pipeline on your workstation.
 
-Plaintext
+```text
 [Step 1: Clone Repo] ──> [Step 2: Initialize Docker / Env] ──> [Step 3: Run Engine]
-Approach A: Using Docker (Highly Recommended)
+```
+
+### Approach A: Using Docker (Highly Recommended)
+
 Docker isolates system architectures seamlessly without breaking global environments.
 
-Bash
+```bash
 # 1. Clone the repository locally
-git clone [https://github.com/delowarhossaincse63/taka-detector.git](https://github.com/delowarhossaincse63/taka-detector.git)
+git clone https://github.com/delowarhossaincse63/taka-detector.git
 cd taka-detector
 
 # 2. Build the optimized application image
@@ -69,10 +75,13 @@ docker build -t taka-detector .
 
 # 3. Spin up the container instance mapped to standard web entry
 docker run -p 7860:7860 taka-detector
+```
+
 Once initialized, hit the running local context at: http://localhost:7860/docs
 
-Approach B: Standard Python Local Setup
-Bash
+### Approach B: Standard Python Local Setup
+
+```bash
 # Initialize isolated python virtual instance
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
@@ -82,32 +91,43 @@ pip install -r requirements.txt
 
 # Fire up local development runtime cluster
 uvicorn app.main:app --host 0.0.0.0 --port 7860
-📡 Structured API Definition
-1. Verification Ping
-Method & Route: GET /
+```
 
-Response Signature:
+## 📡 Structured API Definition
 
-JSON
+### 1. Verification Ping
+
+**Method & Route:** `GET /`
+
+**Response Signature:**
+
+```json
 {
   "message": "API is working!"
 }
-2. Run Note Inference
-Method & Route: POST /predict
+```
 
-Content Payload: multipart/form-data
+### 2. Run Note Inference
 
-Form Argument Key: file (Supports raw .jpg, .jpeg, .png assets)
+**Method & Route:** `POST /predict`
 
-Streamlined Client Implementation (cURL)
-Bash
+**Content Payload:** `multipart/form-data`
+
+**Form Argument Key:** `file` (Supports raw .jpg, .jpeg, .png assets)
+
+#### Streamlined Client Implementation (cURL)
+
+```bash
 curl -X 'POST' \
-  '[https://taka-detector.onrender.com/predict](https://taka-detector.onrender.com/predict)' \
+  'https://taka-detector.onrender.com/predict' \
   -H 'accept: application/json' \
   -H 'Content-Type: multipart/form-data' \
   -F 'file=@sample_note.jpg;type=image/jpeg'
-Production Payload Response Schema
-JSON
+```
+
+#### Production Payload Response Schema
+
+```json
 {
   "filename": "sample_note.jpg",
   "total_detections": 1,
@@ -124,8 +144,12 @@ JSON
     }
   ]
 }
-🤝 Contribution Guidelines
+```
+
+## 🤝 Contribution Guidelines
+
 Found a bug or want to enhance the detection mapping accuracy? Open a Pull Request! We are currently working on hooking this robust pipeline directly into a dedicated mobile application (Flutter / React Native). Feel free to collaborate!
 
-📄 License
+## 📄 License
+
 Distributed under the permissive MIT License. See LICENSE for details.
